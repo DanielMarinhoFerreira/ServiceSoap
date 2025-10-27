@@ -1,0 +1,97 @@
+@ServiceSoap_HostAddress = https://localhost:7189
+#@ServiceSoap_HostAddress = http://192.168.100.11:9000
+
+### Create Usuario
+POST {{ServiceSoap_HostAddress}}/Service.asmx HTTP/1.1
+Content-Type: text/xml; charset=utf-8
+SOAPAction: "http://www.tempuri.org/Create"
+
+<?xml version="1.0" encoding="utf-8"?>
+<soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
+  <soap:Body>
+    <Create xmlns="http://www.tempuri.org/">
+      <entity>
+        <Name>João</Name>
+        <Surname>Silva</Surname>
+        <Login>joaosilva</Login>
+        <Email>joao.silva@email.com</Email>
+        <Password>Senha@123</Password>
+      </entity>
+    </Create>
+  </soap:Body>
+</soap:Envelope>
+
+### Read Usuario by ID
+POST {{ServiceSoap_HostAddress}}/Service.asmx HTTP/1.1
+Content-Type: text/xml; charset=utf-8
+SOAPAction: "http://www.tempuri.org/Read"
+
+<?xml version="1.0" encoding="utf-8"?>
+<soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
+  <soap:Body>
+    <Read xmlns="http://www.tempuri.org/">
+      <id>2</id>
+    </Read>
+  </soap:Body>
+</soap:Envelope>
+
+### search user id
+POST {{ServiceSoap_HostAddress}}/Service.asmx HTTP/1.1
+Content-Type: text/xml; charset=utf-8
+SOAPAction: "http://www.tempuri.org/GetIdUsuario"
+
+<?xml version="1.0" encoding="utf-8"?>
+<soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
+  <soap:Body>
+    <GetIdUsuario xmlns="http://www.tempuri.org/">
+      <nome>João</nome>
+      <login></login> 
+      <Email>joao.silva@email.com</Email>
+    </GetIdUsuario>
+  </soap:Body>
+</soap:Envelope>
+
+### Read All Usuarios
+POST {{ServiceSoap_HostAddress}}/Service.asmx HTTP/1.1
+Content-Type: text/xml; charset=utf-8
+SOAPAction: "http://www.tempuri.org/ReadAll"
+
+<?xml version="1.0" encoding="utf-8"?>
+<soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
+  <soap:Body>
+    <ReadAll xmlns="http://www.tempuri.org/" />
+  </soap:Body>
+</soap:Envelope>
+
+### Update Usuario
+POST {{ServiceSoap_HostAddress}}/Service.asmx HTTP/1.1
+Content-Type: text/xml; charset=utf-8
+SOAPAction: "http://www.tempuri.org/Update"
+
+<?xml version="1.0" encoding="utf-8"?>
+<soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
+  <soap:Body>
+    <Update xmlns="http://www.tempuri.org/">
+      <entity>
+        <Id>2</Id>
+        <Name>Joao Daniel</Name>
+        <Surname>Marinho teste</Surname>
+        <Email>Joa.Daniel.Marinho_dois@email.com</Email>
+      </entity>
+    </Update>
+  </soap:Body>
+</soap:Envelope>
+
+### Delete Usuario
+POST {{ServiceSoap_HostAddress}}/Service.asmx HTTP/1.1
+Content-Type: text/xml; charset=utf-8
+SOAPAction: "http://www.tempuri.org/Delete"
+
+<?xml version="1.0" encoding="utf-8"?>
+<soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
+  <soap:Body>
+    <Delete xmlns="http://www.tempuri.org/">
+      <id>1</id>
+    </Delete>
+  </soap:Body>
+</soap:Envelope>
