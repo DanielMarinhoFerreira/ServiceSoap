@@ -6,12 +6,18 @@ Uma solução robusta em .NET 8 para operações CRUD de usuários, expondo func
 ![GitHub issues](https://img.shields.io/github/issues/DanielMarinhoFerreira/ServiceSoap?style=for-the-badge)
 ![Top Language](https://img.shields.io/github/languages/top/DanielMarinhoFerreira/ServiceSoap?style=for-the-badge)
 ![Code Size](https://img.shields.io/github/languages/code-size/DanielMarinhoFerreira/ServiceSoap?style=for-the-badge)
+![Last Commit](https://img.shields.io/github/last-commit/DanielMarinhoFerreira/ServiceSoap?style=for-the-badge)
+![Contributors](https://img.shields.io/github/contributors/DanielMarinhoFerreira/ServiceSoap?style=for-the-badge)
 
 ## 📝 Descrição Detalhada
 
 O projeto **ServiceSoap** é uma aplicação .NET 8 desenvolvida para gerenciar informações de usuários, oferecendo uma abordagem de comunicação dual: tanto via **API RESTful** quanto via **Serviços SOAP**. Ele foi projetado para ser flexível e interoperável, atendendo a diferentes necessidades de integração.
 
-A persistência de dados é realizada utilizando **Entity Framework Core** com um banco de dados **MySQL**, garantindo robustez e escalabilidade. A validação de dados de entrada é gerenciada de forma eficiente pelo **FluentValidation**, assegurando a integridade das informações. Além disso, a API RESTful é documentada interativamente através do **Swagger/Swashbuckle**, facilitando o consumo e a exploração dos endpoints.
+A persistência de dados é realizada utilizando **Entity Framework Core** com um banco de dados **SQL Server** (incluindo suporte para Azure SQL Database), garantindo robustez e escalabilidade. A validação de dados de entrada é gerenciada de forma eficiente pelo **FluentValidation**, assegurando a integridade das informações. Além disso, a API RESTful é documentada interativamente através do **Swagger/Swashbuckle**, facilitando o consumo e a exploração dos endpoints.
+
+## ✅ Status do Projeto
+
+Este projeto está estável e pronto para uso, oferecendo funcionalidades completas de CRUD para gerenciamento de usuários via API RESTful e Serviço SOAP.
 
 ## 🚀 Acesso ao Projeto
 
@@ -25,7 +31,7 @@ Este projeto está disponível no GitHub. Você pode acessar o repositório para
 *   **API RESTful:** Endpoints HTTP para todas as operações CRUD de usuários, seguindo os princípios REST.
 *   **Serviço SOAP:** Implementação de um serviço SOAP para as mesmas operações CRUD, garantindo compatibilidade com sistemas legados ou que preferem essa abordagem.
 *   **Validação de Dados Robustas:** Utiliza FluentValidation para garantir a integridade e conformidade dos dados de entrada.
-*   **Persistência de Dados com EF Core:** Gerenciamento do banco de dados MySQL através do Entity Framework Core, incluindo migrações.
+*   **Persistência de Dados com EF Core:** Gerenciamento do banco de dados SQL Server através do Entity Framework Core, incluindo migrações.
 *   **Documentação Interativa da API:** Integração com Swagger/Swashbuckle para uma documentação clara e interativa dos endpoints REST.
 *   **Estrutura de Projeto Limpa:** Organização modular com separação de responsabilidades (Controllers, DTOs, Interfaces, Models, Repositories, Validators).
 
@@ -36,7 +42,7 @@ Este projeto foi construído com as seguintes tecnologias:
 *   **Backend:** C# / .NET 8
 *   **Web Framework:** ASP.NET Core
 *   **ORM (Object-Relational Mapper):** Entity Framework Core
-*   **Banco de Dados:** MySQL (via Pomelo.EntityFrameworkCore.MySql)
+*   **Banco de Dados:** SQL Server (via Microsoft.EntityFrameworkCore.SqlServer)
 *   **Serviços SOAP:** SoapCore
 *   **Validação:** FluentValidation
 *   **Documentação API:** Swashbuckle.AspNetCore (Swagger/OpenAPI)
@@ -65,11 +71,11 @@ ServiceSoap/
 Antes de iniciar o projeto, certifique-se de ter os seguintes softwares e ferramentas instalados:
 
 *   **[.NET SDK 8.0](https://dotnet.microsoft.com/download/dotnet/8.0)**
-*   **[MySQL Server](https://dev.mysql.com/downloads/mysql/)** (ou acesso a uma instância MySQL)
-*   **[dotnet-ef CLI tool](https://learn.microsoft.com/pt-br/ef/core/cli/dotnet)** para gerenciar migrações do Entity Framework Core. Se não tiver, instale com:
+*   **[SQL Server](https://www.microsoft.com/pt-br/sql-server/sql-server-downloads)** (ou acesso a uma instância SQL Server, incluindo Azure SQL Database)
+*   **[dotnet-ef CLI tool](https://learn.microsoft.com/pt-br/ef/core/cli/dotnet)** para gerenciar migrações do Entity Framework Core. Se não tiver, instale com a versão específica do projeto:
 
     ```bash
-    dotnet tool install --global dotnet-ef
+    dotnet tool install --global dotnet-ef --version 9.0.10
     ```
 
 ## 🚀 Guia de Início Rápido
@@ -78,49 +84,50 @@ Siga estas etapas para configurar e executar o projeto localmente:
 
 1.  **Clone o repositório:**
     ```bash
-    git clone https://github.com/DanielMarinhoFerreira/ServiceWebApp
+    git clone https://github.com/DanielMarinhoFerreira/ServiceSoap
     ```
 2.  **Navegue até o diretório do projeto:**
     ```bash
-    cd ServiceWebApp/ServiceSoap
+    cd ServiceSoap/ServiceSoap
     ```
 3.  **Configure a string de conexão:**
-    Abra o arquivo `appsettings.json` e atualize a `DefaultConnection` para apontar para sua instância do MySQL.
+    Abra o arquivo `appsettings.json` e atualize a `DefaultConnection` para apontar para sua instância do SQL Server.
 
-     ```json
+    ```json
     {
       "ConnectionStrings": {
-        "DefaultConnection": "Server=localhost;Database=ServiceSoap;User Id=root;Password=SUA_SENHA_AQUI;"
+        "DefaultConnection": "Server=localhost;Database=ServiceSoapDb;User Id=SA;Password=SuaSenhaForteAqui123!;"
       },
       "AllowedHosts": "*"
     }
     ```
     
+    > **Nota:** Para Azure SQL Database, use a string de conexão completa fornecida pelo Azure, como no `appsettings.json` original do projeto.
 
-5.  **Aplique as migrações do banco de dados:**
-    Certifique-se de que o MySQL Server esteja em execução.
+4.  **Aplique as migrações do banco de dados:**
+    Certifique-se de que o SQL Server esteja em execução e acessível.
 
     ```bash
     dotnet ef database update
     ```
     
-    ou
+    ou, especificando o projeto:
 
     ```bash
-    dotnet ef database update --project C:\<diretorio do projeto>
+    dotnet ef database update --project ServiceSoap.csproj
     ```
     
-    Isso criará o banco de dados `ServiceSoap` (se não existir) e a tabela `USERS`.
+    Isso criará o banco de dados `ServiceSoapDb` (se não existir) e a tabela `USERS`.
 
-7.  **Execute o projeto:**
+5.  **Execute o projeto:**
     ```bash
     dotnet run
     ```
     Ou, se estiver usando o Visual Studio, abra o arquivo `ServiceSoap.sln` e execute a aplicação.
 
     A aplicação será iniciada nas URLs configuradas no `Properties/launchSettings.json`, geralmente:
-    *   HTTP: `http://localhost:5277`
-    *   HTTPS: `https://localhost:7189`
+    *   HTTP: `http://localhost:56838`
+    *   HTTPS: `https://localhost:56837`
 
 ## ⚙️ Uso
 
@@ -130,8 +137,8 @@ Após iniciar a aplicação, você pode interagir com os serviços da seguinte f
 
 Acesse a documentação interativa da API RESTful através do Swagger UI no seu navegador:
 
-*   **Desenvolvimento (HTTPS):** `https://localhost:7189/swagger`
-*   **Desenvolvimento (HTTP):** `http://localhost:5277/swagger`
+*   **Desenvolvimento (HTTPS):** `https://localhost:56837/swagger`
+*   **Desenvolvimento (HTTP):** `http://localhost:56838/swagger`
 
 Aqui você pode testar os endpoints CRUD para `Usuario`.
 
@@ -139,14 +146,26 @@ Aqui você pode testar os endpoints CRUD para `Usuario`.
 
 O serviço SOAP está disponível no endpoint `/Service.asmx`. Você pode acessar o WSDL para gerar clientes SOAP em outras linguagens ou ferramentas:
 
-*   **Desenvolvimento (HTTPS):** `https://localhost:7189/Service.asmx?wsdl`
-*   **Desenvolvimento (HTTP):** `http://localhost:5277/Service.asmx?wsdl`
-*   **Visualização doendpoint `/Service.asmx` disponivel com tempo limitado em (HTTPS):** `http://dyolog.ddns.net:9000/Service.asmx`
+*   **Desenvolvimento (HTTPS):** `https://localhost:56837/Service.asmx?wsdl`
+*   **Desenvolvimento (HTTP):** `http://localhost:56838/Service.asmx?wsdl`
 
-Consulte a seção de [Issues](https://github.com/DanielMarinhoFerreira/ServiceWebApp/issues) para ver as tarefas abertas ou relatar novos problemas.
+## 🤝 Como Contribuir
+
+Contribuições são bem-vindas! Se você deseja contribuir com este projeto, siga estas etapas:
+
+1.  Faça um fork do repositório.
+2.  Crie uma nova branch para sua feature (`git checkout -b feature/minha-feature`).
+3.  Faça suas alterações e commit (`git commit -am 'Adiciona nova feature'`).
+4.  Envie para a branch original (`git push origin feature/minha-feature`).
+5.  Abra um Pull Request no repositório principal.
+
+Para relatar bugs ou sugerir melhorias, por favor, abra uma issue em [Issues do ServiceSoap](https://github.com/DanielMarinhoFerreira/ServiceSoap/issues).
+
 ## 📜 Licença
 
-Este projeto não possui uma licença explicitamente definida nos arquivos fornecidos. Por favor, entre em contato com os autores para mais informações sobre os termos de uso e distribuição.
+Este projeto está licenciado sob a licença MIT. Para mais detalhes, consulte o badge de licença no topo do README.
 
 ## 👥 Autores/Contato
-Desenvolvido por Daniel Marinho Ferreira.
+
+*   **Daniel Marinho Ferreira** - Desenvolvedor Principal
+    *   [LinkedIn](https://www.linkedin.com/in/daniel-marinho-ferreira/)
